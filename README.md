@@ -63,7 +63,13 @@ git clone https://github.com/olofmagn/ids_service_identifier.git
 2. Run the script with 10 threads:
 
 ```python
-python3 servicename_finder.py -i emerging-all.rules.txt -o test2.txt -s "Apache Struts" -t 10
+python3 servicename_finder.py -i emerging-all.rules.txt -o customrules_apachestruts.txt -s "Apache Struts" -t 10
+```
+
+Result:
+```
+2025-05-23 02:13:14,374 - INFO - Starting search for service 'Apache Struts' in file 'emerging-all.rules.txt' with 10 threads...
+2025-05-23 02:13:14,520 - INFO - Total matches 55 for the service name Apache Struts
 ```
 
 3. Extract and saves matched result to file to directly use in a pipeline (CI/CD).
