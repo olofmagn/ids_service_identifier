@@ -57,7 +57,7 @@ class SuricataRuleSearcher:
         self.num_threads = num_threads
         self.service_pattern = re.compile(r'msg:"([^"]+)"', re.IGNORECASE)
 
-    def load_file(self) -> List[str]:
+    def _load_file(self) -> List[str]:
         try:
             with open(self.input_file, 'r', encoding='utf-8') as infile:
                 lines = infile.readlines()
@@ -123,12 +123,9 @@ class SuricataRuleSearcher:
         if not self._validate_service_name():
             sys.exit(1)
 
-        if not self._validate_service_name():
-            sys._exit(1)
-
         self.logger.info(f"Starting search for service '{self.service_name}' in file '{self.input_file}' with {self.num_threads} threads...")
 
-        lines = self.load_file()
+        lines = self._load_file()
         # Make sure the workload is evenly distributed among threads
         chunks = self._split_lines_evenly(lines, self.num_threads)
 
