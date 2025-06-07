@@ -73,4 +73,6 @@ Result:
 ```
 
 3. Extract and saves matched result to file to directly use in a pipeline (CI/CD).
+## License
+This project is open-source and licensed under the MIT License. See the LICENSE file for details.
 
