@@ -2,14 +2,14 @@
  This tool helps analysts quickly identify rules related to a particular service (e.g., `Apache Kylin, MySQL`) by
 scanning the `msg` field in alert definitions in rule sets for intrusion detection systems like Suricata and Snort.
 
-## 🔍 What It Does
+##  Features
 - Searches for specific service names (e.g., `Apache Kylin`) by scanning the `msg` field of Suricata rules.
 - Extracts and saves matched result to file to directly use in a pipeline like github.
 - Supports filtering rules based on user-defined criteria.
 - Efficent input & output handling using `argparser`.
 - Efficent iteration and processing of large datasets.
 
-## 🧠 How It Works
+##  How It Works
 ```python
 
 def _find_matches(self, chunk: List[str], output_file: Optional[TextIO] = None) -> int:
@@ -38,21 +38,24 @@ def _find_matches(self, chunk: List[str], output_file: Optional[TextIO] = None) 
     return matched_lines
 ```
 
-## 📂 File structure
-- servicename_finder.py
-- README.md
-- emerging-all.rules.txt
-- inventorylist.pdf
+##  File structure
+```
+.
+├── emerging-all.rules.txt
+├── inventorylist.pdf
+├── README.md
+└── servicename_finder.py
+```
 
-## ✅ Requirements
+##  Requirements
 - Python 3.7+
 - No external dependencies
 
-## 📌 Notes
+##  Notes
 - This tool is used to quickly identify rules related to a inventory list.
 - It is under continous development as more features are about to be added.
 
-## 📦 Usage
+##  Usage
 
 1. Clone the repository on your local machine:
 
@@ -73,6 +76,6 @@ Result:
 ```
 
 3. Extract and saves matched result to file to directly use in a pipeline (CI/CD).
-## 📝 License
+## License
 This project is open-source and licensed under the MIT License. See the LICENSE file for details.
 
