@@ -1,4 +1,3 @@
-import threading
 import re
 import logging
 import argparse
@@ -268,7 +267,7 @@ def main():
     """
     The entry point for the script execution.
     """
-    
+
     try:
         app = SuricataServiceSearchApp()
         app.run()
