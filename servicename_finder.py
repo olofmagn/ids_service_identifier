@@ -25,7 +25,7 @@ BANNER = r"""
 
         """
 class LoggerManager:
-    def __init__(self, name: str = __name__, level: int = logging.INFO):
+    def __init__(self, name: str = __name__, level: int = logging.INFO) -> None:
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)
 
@@ -36,11 +36,11 @@ class LoggerManager:
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
 
-    def get_logger(self):
+    def get_logger(self) -> logging.Logger:
         return self.logger
 
 class SuricataRuleSearcher:
-    def __init__(self, input_file: str, output_file: Optional[str], service_name: str, num_threads: int = 4):
+    def __init__(self, input_file: str, output_file: Optional[str], service_name: str, num_threads: int = 4) -> None:
         """
         Initializes the SuricataRuleSearcher object.
 
@@ -207,7 +207,7 @@ class ArgumentParser:
 
 
 class SuricataServiceSearchApp:
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes the application, including argument parsing and searcher.
         """
