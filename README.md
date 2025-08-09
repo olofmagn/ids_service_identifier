@@ -4,10 +4,20 @@ scanning the `msg` field in alert definitions in rule sets for intrusion detecti
 
 ##  Features
 - Searches for specific service names (e.g., `Apache Kylin`) by scanning the `msg` field of Suricata rules.
-- Extracts and saves matched result to file to directly use in a pipeline like github.
+- Extracts and saves matched result to file to directly use in a pipeline like Github.
 - Supports filtering rules based on user-defined criteria.
-- Efficent input & output handling using `argparser`.
-- Efficent iteration and processing of large datasets.
+- Input & output handling using `argparser`.
+- Iteration and processing of large datasets.
+
+## Automation Integration
+This tool is designed to integrate into automated Suricata rule management workflows:
+1. **Rule Discovery** - Automatically identify service-specific rules from large rule sets.
+2. **Pipeline Integration** - Output files can be directly consumed by deployment scripts.
+3. **Batch Processing** - Multi-threaded processing handles large datasets efficiently.
+
+## Related Documentation
+- See `docs/document.pdf` for the complete automation framework that uses this tool.
+- See `docs/inventorylist.pdf` for the inventory list.
 
 ##  How It Works
 ```python
@@ -64,7 +74,7 @@ git clone https://github.com/olofmagn/ids_service_identifier.git
 
 2. Run the script with 10 threads:
 
-```python
+```bash
 python3 servicename_finder.py -i emerging-all.rules.txt -o customrules_apachestruts.txt -s "Apache Struts" -t 10
 ```
 
