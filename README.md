@@ -41,8 +41,11 @@ def _find_matches(self, chunk: List[str], output_file: Optional[TextIO] = None) 
 ##  File structure
 ```
 .
+├── docs
+│   ├── document.pdf # documentation for automating suricata rule implementations
+│   └── inventorylist.pdf # inventory list for rule implementation
 ├── emerging-all.rules.txt
-├── inventorylist.pdf
+├── LICENSE
 ├── README.md
 └── servicename_finder.py
 ```
@@ -50,10 +53,6 @@ def _find_matches(self, chunk: List[str], output_file: Optional[TextIO] = None) 
 ##  Requirements
 - Python 3.7+
 - No external dependencies
-
-##  Notes
-- This tool is used to quickly identify rules related to a inventory list.
-- It is under continous development as more features are about to be added.
 
 ##  Usage
 
