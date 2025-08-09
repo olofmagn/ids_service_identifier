@@ -11,6 +11,7 @@ Author: Olof Magnusson
 Date: 2025-05-22
 A program that searches for rules using the msg header for faster lookups of service names in inventory lists
 """
+
 BANNER = r"""
    _____                 _             __ _           _
   / ____|               (_)           / _(_)         | |
@@ -26,7 +27,19 @@ BANNER = r"""
 
 
 class LoggerManager:
+    """
+    Logger manager
+    """
+
     def __init__(self, name: str = __name__, level: int = logging.INFO) -> None:
+        """
+        Initialize logger manager with specified name and logging level
+
+        Args:
+        - name (str): name of the logger
+        - level (int): logging level
+        """
+
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)
 
@@ -38,10 +51,18 @@ class LoggerManager:
             self.logger.addHandler(handler)
 
     def get_logger(self) -> logging.Logger:
+        """
+        Return configured logger instance
+        """
+
         return self.logger
 
 
 class SuricataRuleSearcher:
+    """
+    Searches for service names in IDS rule files using multiple threads
+    """
+
     def __init__(
         self,
         input_file: str,
@@ -53,10 +74,10 @@ class SuricataRuleSearcher:
         Initializes the SuricataRuleSearcher object.
 
         Args:
-        - input_file (str): Path to the input Suricata rule file.
-        - output_file (str): Path to the output file for saving matched rules.
-        - service_name (str): The service name to search for in the 'msg' field.
-        - num_threads (int): The number of threads to use for processing.
+        - input_file (str): Path to the input Suricata rule file
+        - output_file (str): Path to the output file for saving matched rules
+        - service_name (str): The service name to search for in the 'msg' field
+        - num_threads (int): The number of threads to use for processing
         """
 
         self.logger = LoggerManager(self.__class__.__name__).get_logger()
@@ -67,8 +88,15 @@ class SuricataRuleSearcher:
         self.service_pattern = re.compile(r'msg:"([^"]+)"', re.IGNORECASE)
 
     def _load_file(self) -> List[str]:
+        """
+        Loads a file and read all possible lines
+
+        Returns:
+        - (List[str]): A list of lines to process
+        """
+
         try:
-            with open(self.input_file, "r", encoding="utf-8") as infile:
+            with open(self.input_file, 'r', encoding='utf-8') as infile:
                 lines = infile.readlines()
             return lines
         except FileNotFoundError:
@@ -83,6 +111,13 @@ class SuricataRuleSearcher:
             sys.exit(1)
 
     def _validate_service_name(self) -> bool:
+        """
+        Validates a service name from standard input
+
+        Returns:
+        - bool: True if the service name is valid, False otherwise
+        """
+
         if not self.service_name:
             self.logger.error(
                 f"No service name provided: {self.service_name}. Exiting the program"
@@ -92,10 +127,13 @@ class SuricataRuleSearcher:
 
     def _search_for_service_in_chunk(self, chunk: List[str]) -> int:
         """
-        Searches for the specified service name in a chunk of the Suricata rule file.
+        Searches for the specified service name in a chunk of the Suricata rule file
 
         Args:
-        - chunk (list): A chunk of lines to process.
+        - chunk (List[str]): A chunk of lines to process
+
+        Returns:
+        - int: Number of matched lines found
         """
 
         # Console or printout to file depending on the arguments provided
@@ -110,6 +148,17 @@ class SuricataRuleSearcher:
     def _find_matches(
         self, chunk: List[str], output_file: Optional[TextIO] = None
     ) -> int:
+        """
+        Find and count matches for the service name in a chunk of lines
+
+        Args:
+        - chunk (List[str]): A chunk of lines to process
+        - output_file (Optional[TextIO]): The output file for saving matched rules
+
+        Returns:
+        - int: Number of matched lines found
+        """
+
         if not self.service_name:
             return 0
 
@@ -136,7 +185,7 @@ class SuricataRuleSearcher:
 
     def process_file_in_chunks(self) -> None:
         """
-        Processes the Suricata rule file in chunks and uses threading to search for the specific service.
+        Processes the Suricata rule file in chunks and uses threading to search for the specific service
         """
 
         if not self._validate_service_name():
@@ -147,6 +196,7 @@ class SuricataRuleSearcher:
         )
 
         lines = self._load_file()
+
         # Make sure the workload is evenly distributed among threads
         chunks = self._split_lines_evenly(lines, self.num_threads)
 
@@ -173,6 +223,17 @@ class SuricataRuleSearcher:
             )
 
     def _split_lines_evenly(self, lines: List[str], num_chunks: int) -> List[List[str]]:
+        """
+        Split lines evenly
+
+        Args:
+        - lines (List[str]): A list of lines to split
+        - num_chunks (int): Number of chunks to process
+        
+        Returns:
+        - List[List[str]]: A list of chunks
+        """
+
         avg = len(lines) // num_chunks
         remainder = len(lines) % num_chunks
         chunks = []
@@ -185,19 +246,23 @@ class SuricataRuleSearcher:
 
         return chunks
 
-
 class ArgumentParser:
     """
     Handles argument parsing and script execution.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        Initialize argument parser
+        """
+
         self.parser = self.create_parser()
 
     def create_parser(self) -> argparse.ArgumentParser:
         """
         Configures the argument parser with expected arguments.
         """
+
         parser = argparse.ArgumentParser(
             description="Search for service names in Suricata rule files",
             formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -240,6 +305,10 @@ class ArgumentParser:
 
 
 class SuricataServiceSearchApp:
+    """
+    Main application class that orchestrates the Suricata rule search process
+    """
+
     def __init__(self) -> None:
         """
         Initializes the application, including argument parsing and searcher.
@@ -263,7 +332,7 @@ class SuricataServiceSearchApp:
         self.searcher.process_file_in_chunks()
 
 
-def main():
+def main() -> None:
     """
     The entry point for the script execution.
     """
